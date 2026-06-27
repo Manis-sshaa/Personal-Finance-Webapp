@@ -1,0 +1,17 @@
+body {
+    min-height: 100vh;
+}
+
+.navbar-brand {
+    letter-spacing: 0.5px;
+}
+
+.card {
+    border: none;
+    border-radius: 0.75rem;
+}
+
+.card-subtitle {
+    opacity: 0.85;
+    font-weight: 500;
+}

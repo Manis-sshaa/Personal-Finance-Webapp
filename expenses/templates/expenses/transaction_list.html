@@ -1,0 +1,12 @@
+{% extends "expenses/base.html" %}
+
+{% block title %}All Transactions - Expense Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">All Transactions</h4>
+    <a href="{% url 'transaction_create' %}" class="btn btn-primary btn-sm">+ Add Transaction</a>
+</div>
+
+{% include "expenses/_transaction_table.html" %}
+{% endblock %}
