@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -18,6 +19,7 @@ def _totals():
     return income, expense, income - expense
 
 
+@login_required
 def dashboard(request):
     income, expense, balance = _totals()
     transactions = Transaction.objects.all()[:10]
@@ -30,6 +32,7 @@ def dashboard(request):
     return render(request, "expenses/dashboard.html", context)
 
 
+@login_required
 def transaction_list(request):
     transactions = Transaction.objects.all()
     return render(
@@ -37,6 +40,7 @@ def transaction_list(request):
     )
 
 
+@login_required
 def transaction_create(request):
     if request.method == "POST":
         form = TransactionForm(request.POST)
@@ -53,6 +57,7 @@ def transaction_create(request):
     )
 
 
+@login_required
 def transaction_update(request, pk):
     transaction = get_object_or_404(Transaction, pk=pk)
     if request.method == "POST":
@@ -70,6 +75,7 @@ def transaction_update(request, pk):
     )
 
 
+@login_required
 def transaction_delete(request, pk):
     transaction = get_object_or_404(Transaction, pk=pk)
     if request.method == "POST":

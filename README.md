@@ -30,14 +30,26 @@ pip install -r requirements.txt
 # 3. Apply database migrations
 python manage.py migrate
 
-# 4. (optional) Create an admin user
+# 4. Create a user to sign in with (required — all pages need login)
 python manage.py createsuperuser
 
 # 5. Run the development server
 python manage.py runserver
 ```
 
-Then open http://127.0.0.1:8000/ in your browser.
+Then open http://127.0.0.1:8000/ and sign in with the user you created.
+
+## Configuration
+
+Settings are read from environment variables (see `.env.example`):
+
+| Variable | Default | Notes |
+|----------|---------|-------|
+| `DJANGO_SECRET_KEY` | insecure dev key | **Set a strong value in production.** |
+| `DJANGO_DEBUG` | `True` | Set to `False` in production. |
+| `DJANGO_ALLOWED_HOSTS` | `localhost,127.0.0.1` | Comma-separated hostnames. |
+
+All transaction pages require authentication.
 
 ## Running tests
 

@@ -1,10 +1,18 @@
 from datetime import date
 from decimal import Decimal
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
 from .models import Transaction
+
+
+class AuthRequiredTests(TestCase):
+    def test_dashboard_redirects_anonymous_to_login(self):
+        response = self.client.get(reverse("dashboard"))
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse("login"), response.url)
 
 
 class TransactionModelTests(TestCase):
@@ -17,6 +25,8 @@ class TransactionModelTests(TestCase):
 
 class DashboardViewTests(TestCase):
     def setUp(self):
+        user = User.objects.create_user(username="tester", password="pw12345")
+        self.client.force_login(user)
         Transaction.objects.create(
             type=Transaction.INCOME,
             title="Salary",
@@ -41,6 +51,10 @@ class DashboardViewTests(TestCase):
 
 
 class TransactionCrudTests(TestCase):
+    def setUp(self):
+        user = User.objects.create_user(username="tester", password="pw12345")
+        self.client.force_login(user)
+
     def test_create_transaction(self):
         response = self.client.post(
             reverse("transaction_create"),
